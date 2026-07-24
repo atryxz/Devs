@@ -1,0 +1,1130 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>EduSphere - School & Student Portal</title>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg-color: #fbf9f6;
+            --card-bg: #f3ede2;
+            --card-pure: #ffffff;
+            --primary: #d97757;
+            --primary-hover: #c46545;
+            --text-main: #2c2c2c;
+            --text-muted: #6b6b6b;
+            --border-color: #e6decb;
+            --success: #2e7d32;
+            --warning: #ed6c02;
+            --danger: #d32f2f;
+            --shadow: 0 4px 20px rgba(0, 0, 0, 0.05);
+            --radius: 12px;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: 'Plus Jakarta Sans', sans-serif;
+        }
+
+        body {
+            background-color: var(--bg-color);
+            color: var(--text-main);
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
+
+        /* Glassmorphism Navbar */
+        nav {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 70px;
+            backdrop-filter: blur(10px);
+            background: rgba(251, 249, 246, 0.85);
+            border-bottom: 1px solid var(--border-color);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0 2rem;
+            z-index: 1000;
+        }
+
+        .logo-area {
+            font-weight: 700;
+            font-size: 1.25rem;
+            color: var(--primary);
+            display: flex;
+            align-items: center;
+            gap: 0.5rreem;
+            text-decoration: none;
+        }
+
+        .nav-actions {
+            display: flex;
+            gap: 1rem;
+            align-items: center;
+        }
+
+        /* Layout Container */
+        .app-container {
+            margin-top: 70px;
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+        }
+
+        /* Utility Components */
+        .btn {
+            background-color: var(--primary);
+            color: white;
+            border: none;
+            padding: 0.6rem 1.2rem;
+            border-radius: var(--radius);
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .btn:hover {
+            background-color: var(--primary-hover);
+            transform: translateY(-1px);
+        }
+
+        .btn-outline {
+            background: transparent;
+            border: 1px solid var(--border-color);
+            color: var(--text-main);
+        }
+
+        .btn-outline:hover {
+            background: var(--card-bg);
+        }
+
+        input, select, textarea {
+            width: 100%;
+            padding: 0.75rem;
+            border: 1px solid var(--border-color);
+            border-radius: var(--radius);
+            background: var(--card-pure);
+            color: var(--text-main);
+            font-size: 0.95rem;
+            margin-bottom: 1rem;
+            outline: none;
+            transition: border-color 0.3s;
+        }
+
+        input:focus, select:focus, textarea:focus {
+            border-color: var(--primary);
+        }
+
+        .card {
+            background: var(--card-pure);
+            border: 1px solid var(--border-color);
+            border-radius: var(--radius);
+            padding: 1.5rem;
+            box-shadow: var(--shadow);
+            margin-bottom: 1.5rem;
+        }
+
+        /* Views */
+        .view {
+            display: none;
+            padding: 2rem;
+            max-width: 1200px;
+            margin: 0 auto;
+            width: 100%;
+        }
+
+        .view.active {
+            display: block;
+        }
+
+        /* Landing / Login View */
+        .auth-hero {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 4rem;
+            align-items: center;
+            min-height: calc(100vh - 70px);
+            padding: 2rem;
+            max-width: 1100px;
+            margin: 0 auto;
+        }
+
+        .auth-card {
+            background: var(--card-pure);
+            border: 1px solid var(--border-color);
+            padding: 2.5rem;
+            border-radius: 16px;
+            box-shadow: var(--shadow);
+        }
+
+        .role-tabs {
+            display: flex;
+            gap: 0.5rem;
+            margin-bottom: 1.5rem;
+            background: var(--card-bg);
+            padding: 0.3rem;
+            border-radius: var(--radius);
+        }
+
+        .role-tab {
+            flex: 1;
+            text-align: center;
+            padding: 0.5rem;
+            border-radius: 8px;
+            cursor: pointer;
+            font-weight: 600;
+            font-size: 0.9rem;
+            transition: background 0.3s;
+        }
+
+        .role-tab.active {
+            background: var(--card-pure);
+            color: var(--primary);
+            box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+        }
+
+        /* Dashboard Flex Layout */
+        .dashboard-grid {
+            display: grid;
+            grid-template-columns: 280px 1fr;
+            gap: 2rem;
+            min-height: calc(100vh - 70px);
+        }
+
+        .sidebar {
+            background: var(--card-pure);
+            border-right: 1px solid var(--border-color);
+            padding: 2rem 1rem;
+            display: flex;
+            flex-direction: column;
+            gap: 0.5rem;
+        }
+
+        .sidebar-item {
+            padding: 0.75rem 1rem;
+            border-radius: var(--radius);
+            cursor: pointer;
+            font-weight: 500;
+            color: var(--text-muted);
+            transition: all 0.3s;
+        }
+
+        .sidebar-item:hover, .sidebar-item.active {
+            background: var(--card-bg);
+            color: var(--primary);
+        }
+
+        .main-content {
+            padding: 2rem 2rem 2rem 0;
+            overflow-y: auto;
+        }
+
+        /* Tables */
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 1rem;
+            background: var(--card-pure);
+            border-radius: var(--radius);
+            overflow: hidden;
+            border: 1px solid var(--border-color);
+        }
+
+        th, td {
+            padding: 0.85rem 1rem;
+            text-align: left;
+            border-bottom: 1px solid var(--border-color);
+            font-size: 0.9rem;
+        }
+
+        th {
+            background: var(--card-bg);
+            font-weight: 600;
+        }
+
+        tr:last-child td {
+            border-bottom: none;
+        }
+
+        .badge {
+            padding: 0.25rem 0.6rem;
+            border-radius: 50px;
+            font-size: 0.75rem;
+            font-weight: 600;
+        }
+
+        .badge-success { background: #e8f5e9; color: var(--success); }
+        .badge-warning { background: #fff3e0; color: var(--warning); }
+        .badge-danger { background: #ffebee; color: var(--danger); }
+
+        /* Hidden Utility */
+        .hidden { display: none !important; }
+        
+        .admin-banner {
+            background: #fff3e0;
+            border: 1px dashed var(--warning);
+            padding: 0.5rem 1rem;
+            border-radius: 8px;
+            font-size: 0.85rem;
+            margin-bottom: 1rem;
+            color: var(--warning);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Glassmorphism Navbar -->
+    <nav>
+        <a href="#" class="logo-area" onclick="router('login')">
+            🏫 EduSphere Portal
+        </a>
+        <div class="nav-actions" id="nav-actions">
+            <!-- Dynamically populated based on auth -->
+        </div>
+    </nav>
+
+    <div class="app-container">
+
+        <!-- 1. LOGIN / LANDING VIEW -->
+        <div id="view-login" class="view active">
+            <div class="auth-hero">
+                <div>
+                    <h1 style="font-size: 3rem; margin-bottom: 1rem; line-height: 1.2;">Modern Unified School & Student Portal</h1>
+                    <p style="color: var(--text-muted); font-size: 1.1rem; margin-bottom: 2rem;">
+                        Manage attendance, track homework, view progress bars, collaborate on study materials, and run administrative systems effortlessly.
+                    </p>
+                    <div id="admin-secret-hint" class="hidden admin-banner">
+                        <span>🔒 Admin Access Mode Unlocked via URL!</span>
+                    </div>
+                </div>
+
+                <div class="auth-card">
+                    <div class="role-tabs">
+                        <div class="role-tab active" onclick="switchLoginRole('student')">Student</div>
+                        <div class="role-tab" onclick="switchLoginRole('teacher')">Teacher</div>
+                        <div class="role-tab" onclick="switchLoginRole('admin')">Admin</div>
+                    </div>
+
+                    <form id="login-form" onsubmit="handleLogin(event)">
+                        <input type="hidden" id="login-role" value="student">
+                        
+                        <div id="field-username">
+                            <label>Username / Student ID</label>
+                            <input type="text" id="input-username" placeholder="e.g. S101 or roll number" required>
+                        </div>
+
+                        <div id="field-school" class="hidden">
+                            <label>Admin Access Key</label>
+                            <input type="password" id="input-admin-pass" placeholder="Enter admin password">
+                        </div>
+
+                        <label>Password</label>
+                        <input type="password" id="input-password" placeholder="Default: student123" required>
+
+                        <button type="submit" class="btn" style="width: 100%;">Sign In</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+
+        <!-- 2. ADMIN PANEL VIEW (Unlocked via URL #admin or ?access=admin) -->
+        <div id="view-admin" class="view">
+            <div class="dashboard-grid">
+                <div class="sidebar">
+                    <div class="sidebar-item active" onclick="switchAdminTab('schools')">School Setup</div>
+                    <div class="sidebar-item" onclick="switchAdminTab('students')">Student Database</div>
+                    <div class="sidebar-item" onclick="switchAdminTab('teachers')">Teacher Management</div>
+                    <div class="sidebar-item" onclick="logout()">Logout</div>
+                </div>
+                <div class="main-content">
+                    <!-- School Setup Tab -->
+                    <div id="admin-tab-schools" class="admin-subview">
+                        <h2>School Information Setup</h2>
+                        <p style="color: var(--text-muted); margin-bottom: 1.5rem;">Configure the active institution name and basic parameters.</p>
+                        <div class="card">
+                            <form onsubmit="saveSchoolConfig(event)">
+                                <label>School Name</label>
+                                <input type="text" id="config-school-name" required>
+                                <label>Academic Session</label>
+                                <input type="text" id="config-session" value="2026-2027" required>
+                                <button type="submit" class="btn">Update School Details</button>
+                            </form>
+                        </div>
+                    </div>
+
+                    <!-- Students Management Tab -->
+                    <div id="admin-tab-students" class="admin-subview hidden">
+                        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1.5rem;">
+                            <div>
+                                <h2>Student Registry (Classes 1-10)</h2>
+                                <p style="color: var(--text-muted);">Manage student profiles, sections, and credential resets.</p>
+                            </div>
+                            <button class="btn" onclick="openAddStudentModal()">+ Register Student</button>
+                        </div>
+                        <div class="card" style="padding: 0;">
+                            <table id="admin-students-table">
+                                <thead>
+                                    <tr>
+                                        <th>Roll</th>
+                                        <th>Name</th>
+                                        <th>Class</th>
+                                        <th>Section</th>
+                                        <th>Username</th>
+                                        <th>Actions</th>
+                                    </tr>
+                                </thead>
+                                <tbody></tbody>
+                            </table>
+                        </div>
+                    </div>
+
+                    <!-- Teacher Management Tab -->
+                    <div id="admin-tab-teachers" class="admin-subview hidden">
+                        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1.5rem;">
+                            <div>
+                                <h2>Teacher Registry</h2>
+                                <p style="color: var(--text-muted);">Assign teachers to specific classes and sections.</p>
+                            </div>
+                            <button class="btn" onclick="openAddTeacherModal()">+ Add Teacher</button>
+                        </div>
+                        <div class="card" style="padding: 0;">
+                            <table id="admin-teachers-table">
+                                <thead>
+                                    <tr>
+                                        <th>Teacher Name</th>
+                                        <th>Assigned Class</th>
+                                        <th>Section</th>
+                                        <th>Username</th>
+                                        <th>Actions</th>
+                                    </tr>
+                                </thead>
+                                <tbody></tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- 3. TEACHER DASHBOARD VIEW -->
+        <div id="view-teacher" class="view">
+            <div class="dashboard-grid">
+                <div class="sidebar">
+                    <div class="sidebar-item active" onclick="switchTeacherTab('attendance')">Attendance Control</div>
+                    <div class="sidebar-item" onclick="switchTeacherTab('homework')">Homework & Projects</div>
+                    <div class="sidebar-item" onclick="switchTeacherTab('materials')">Study Materials</div>
+                    <div class="sidebar-item" onclick="switchTeacherTab('course')">Course Progress</div>
+                    <div class="sidebar-item" onclick="logout()">Logout</div>
+                </div>
+                <div class="main-content">
+                    <!-- Attendance Control -->
+                    <div id="teacher-tab-attendance" class="teacher-subview">
+                        <h2>Daily Attendance & Late Tracking</h2>
+                        <p style="color: var(--text-muted); margin-bottom: 1.5rem;">Mark student arrival status and review late submission applications.</p>
+                        
+                        <div class="card">
+                            <h3>Mark Attendance for Today</h3>
+                            <div style="display: flex; gap: 1rem; margin-top: 1rem;">
+                                <select id="att-filter-class" onchange="renderTeacherAttendanceTable()">
+                                    <option value="1">Class 1</option><option value="2">Class 2</option><option value="3">Class 3</option><option value="4">Class 4</option><option value="5">Class 5</option><option value="6">Class 6</option><option value="7">Class 7</option><option value="8">Class 8</option><option value="9">Class 9</option><option value="10">Class 10</option>
+                                </select>
+                                <select id="att-filter-section" onchange="renderTeacherAttendanceTable()">
+                                    <option value="A">Section A</option>
+                                    <option value="B">Section B</option>
+                                </select>
+                            </div>
+                            <table id="teacher-attendance-table" style="margin-top: 1rem;">
+                                <thead>
+                                    <tr>
+                                        <th>Roll</th>
+                                        <th>Student Name</th>
+                                        <th>Status</th>
+                                        <th>Arrival Time</th>
+                                        <th>Mark Late / Present</th>
+                                    </tr>
+                                </thead>
+                                <tbody></tbody>
+                            </table>
+                        </div>
+
+                        <div class="card">
+                            <h3>Late Application Requests</h3>
+                            <table id="teacher-late-requests-table" style="margin-top: 1rem;">
+                                <thead>
+                                    <tr>
+                                        <th>Student</th>
+                                        <th>Reason</th>
+                                        <th>Action</th>
+                                    </tr>
+                                </thead>
+                                <tbody></tbody>
+                            </table>
+                        </div>
+                    </div>
+
+                    <!-- Homework & Projects Tab -->
+                    <div id="teacher-tab-homework" class="teacher-subview hidden">
+                        <h2>Publish Homework & Assignments</h2>
+                        <div class="card">
+                            <form onsubmit="handleTeacherPostHomework(event)">
+                                <label>Subject</label>
+                                <input type="text" id="hw-subject" placeholder="e.g. Mathematics" required>
+                                <label>Target Class</label>
+                                <select id="hw-class">
+                                    <option value="1">Class 1</option><option value="2">Class 2</option><option value="3">Class 3</option><option value="4">Class 4</option><option value="5">Class 5</option><option value="6">Class 6</option><option value="7">Class 7</option><option value="8">Class 8</option><option value="9">Class 9</option><option value="10">Class 10</option>
+                                </select>
+                                <label>Task Title & Description</label>
+                                <textarea id="hw-desc" rows="3" placeholder="Describe assignment details..." required></textarea>
+                                <label>Due Date</label>
+                                <input type="date" id="hw-date" required>
+                                <button type="submit" class="btn">Publish Assignment</button>
+                            </form>
+                        </div>
+                    </div>
+
+                    <!-- Study Materials Upload Tab -->
+                    <div id="teacher-tab-materials" class="teacher-subview hidden">
+                        <h2>Upload Grade-Wide Study Materials</h2>
+                        <div class="card">
+                            <form onsubmit="handleTeacherPostMaterial(event)">
+                                <label>Title</label>
+                                <input type="text" id="mat-title" placeholder="Chapter Notes PDF Link or Text" required>
+                                <label>Grade Level</label>
+                                <select id="mat-class">
+                                    <option value="1">Class 1</option><option value="2">Class 2</option><option value="3">Class 3</option><option value="4">Class 4</option><option value="5">Class 5</option><option value="6">Class 6</option><option value="7">Class 7</option><option value="8">Class 8</option><option value="9">Class 9</option><option value="10">Class 10</option>
+                                </select>
+                                <label>Resource URL or Google Drive Link</label>
+                                <input type="text" id="mat-url" placeholder="https://..." required>
+                                <button type="submit" class="btn">Share Resource</button>
+                            </form>
+                        </div>
+                    </div>
+
+                    <!-- Course Progress Tab -->
+                    <div id="teacher-tab-course" class="teacher-subview hidden">
+                        <h2>Syllabus & Course Progress Tracker</h2>
+                        <div class="card">
+                            <label>Select Grade to Track Syllabus</label>
+                            <select id="course-track-grade" onchange="renderCourseTracker()">
+                                <option value="1">Class 1</option><option value="2">Class 2</option><option value="3">Class 3</option><option value="4">Class 4</option><option value="5">Class 5</option><option value="6">Class 6</option><option value="7">Class 7</option><option value="8">Class 8</option><option value="9">Class 9</option><option value="10">Class 10</option>
+                            </select>
+                            <div id="course-progress-container" style="margin-top: 1rem;">
+                                <!-- Dynamically populated progress bars -->
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- 4. STUDENT DASHBOARD VIEW -->
+        <div id="view-student" class="view">
+            <div class="dashboard-grid">
+                <div class="sidebar">
+                    <div class="sidebar-item active" onclick="switchStudentTab('overview')">My Overview</div>
+                    <div class="sidebar-item" onclick="switchStudentTab('homework')">Homework & Tasks</div>
+                    <div class="sidebar-item" onclick="switchStudentTab('materials')">Ebook & Study Hub</div>
+                    <div class="sidebar-item" onclick="switchStudentTab('goals')">Goals & Self-Study</div>
+                    <div class="sidebar-item" onclick="logout()">Logout</div>
+                </div>
+                <div class="main-content">
+                    <!-- Overview Tab -->
+                    <div id="student-tab-overview" class="student-subview">
+                        <h2>Welcome back, <span id="student-welcome-name">Student</span>!</h2>
+                        <p style="color: var(--text-muted); margin-bottom: 1.5rem;">Here is your daily attendance and active task summary.</p>
+
+                        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1.5rem;">
+                            <div class="card">
+                                <h3>Today's Attendance Status</h3>
+                                <div id="student-attendance-status-box" style="margin-top: 1rem; font-size: 1.1rem; font-weight: 600;">
+                                    Loading status...
+                                </div>
+                                <div style="margin-top: 1.5rem;" id="late-application-box">
+                                    <p style="font-size: 0.9rem; margin-bottom: 0.5rem;">Arriving late? Submit an application:</p>
+                                    <input type="text" id="late-reason" placeholder="Reason for late arrival...">
+                                    <button class="btn btn-outline" onclick="submitLateApplication()">Submit Late Notice</button>
+                                </div>
+                            </div>
+
+                            <div class="card">
+                                <h3>Pending Homework Counter</h3>
+                                <div id="student-homework-counter" style="font-size: 2.5rem; font-weight: 700; color: var(--primary); margin-top: 1rem;">
+                                    0 Tasks Due
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Homework Tab -->
+                    <div id="student-tab-homework" class="student-subview hidden">
+                        <h2>Assigned Homework & Project Work</h2>
+                        <div id="student-homework-list" style="margin-top: 1rem;">
+                            <!-- Populated dynamically -->
+                        </div>
+                    </div>
+
+                    <!-- Study Materials Tab -->
+                    <div id="student-tab-materials" class="student-subview hidden">
+                        <h2>Grade-Wide Study Materials & Library</h2>
+                        <p style="color: var(--text-muted); margin-bottom: 1rem;">Access materials uploaded by teachers for your specific grade level across all sections.</p>
+                        <div id="student-materials-list">
+                            <!-- Populated dynamically -->
+                        </div>
+                    </div>
+
+                    <!-- Goals & Self-Study Tab -->
+                    <div id="student-tab-goals" class="student-subview hidden">
+                        <h2>Personal Study Goals & Tick-box Tracker</h2>
+                        <div class="card">
+                            <h3>Add New Study Target</h3>
+                            <input type="text" id="new-goal-text" placeholder="e.g. Complete Algebra Chapter 4 Exercises">
+                            <button class="btn" onclick="addStudentGoal()">Add to Tracker</button>
+                        </div>
+                        <div class="card">
+                            <h3>My Active Study Checklist</h3>
+                            <div id="student-goals-container" style="margin-top: 1rem;">
+                                <!-- Populated dynamically -->
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+    <!-- MODAL FOR ADDING STUDENT (ADMIN) -->
+    <div id="modal-add-student" class="view" style="position: fixed; top:0; left:0; width:100%; height:100%; background: rgba(0,0,0,0.4); display:none; justify-content:center; align-items:center; z-index: 2000;">
+        <div class="card" style="width: 400px; background: var(--card-pure);">
+            <h3>Register New Student</h3>
+            <form onsubmit="handleCreateStudent(event)" style="margin-top: 1rem;">
+                <label>Full Name</label>
+                <input type="text" id="reg-name" required>
+                <label>Class (1-10)</label>
+                <select id="reg-class">
+                    <option value="1">Class 1</option><option value="2">Class 2</option><option value="3">Class 3</option><option value="4">Class 4</option><option value="5">Class 5</option><option value="6">Class 6</option><option value="7">Class 7</option><option value="8">Class 8</option><option value="9">Class 9</option><option value="10">Class 10</option>
+                </select>
+                <label>Section</label>
+                <select id="reg-section">
+                    <option value="A">Section A</option>
+                    <option value="B">Section B</option>
+                </select>
+                <label>Roll Number</label>
+                <input type="number" id="reg-roll" required>
+                <div style="display: flex; gap: 1rem; margin-top: 1rem;">
+                    <button type="submit" class="btn" style="flex:1;">Save Student</button>
+                    <button type="button" class="btn btn-outline" onclick="closeModals()" style="flex:1;">Cancel</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- MODAL FOR ADDING TEACHER (ADMIN) -->
+    <div id="modal-add-teacher" class="view" style="position: fixed; top:0; left:0; width:100%; height:100%; background: rgba(0,0,0,0.4); display:none; justify-content:center; align-items:center; z-index: 2000;">
+        <div class="card" style="width: 400px; background: var(--card-pure);">
+            <h3>Register Teacher Profile</h3>
+            <form onsubmit="handleCreateTeacher(event)" style="margin-top: 1rem;">
+                <label>Full Name</label>
+                <input type="text" id="t-name" required>
+                <label>Assigned Class</label>
+                <select id="t-class">
+                    <option value="1">Class 1</option><option value="2">Class 2</option><option value="3">Class 3</option><option value="4">Class 4</option><option value="5">Class 5</option><option value="6">Class 6</option><option value="7">Class 7</option><option value="8">Class 8</option><option value="9">Class 9</option><option value="10">Class 10</option>
+                </select>
+                <label>Assigned Section</label>
+                <select id="t-section">
+                    <option value="A">Section A</option>
+                    <option value="B">Section B</option>
+                </select>
+                <label>Username</label>
+                <input type="text" id="t-user" placeholder="e.g. teacher_math" required>
+                <label>Password</label>
+                <input type="password" id="t-pass" value="teacher123" required>
+                <div style="display: flex; gap: 1rem; margin-top: 1rem;">
+                    <button type="submit" class="btn" style="flex:1;">Save Teacher</button>
+                    <button type="button" class="btn btn-outline" onclick="closeModals()" style="flex:1;">Cancel</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <script>
+        /* ================= DATABASE & INITIALIZATION ================= */
+        const DEFAULT_DB = {
+            school: { name: "Greenwood Academy", session: "2026-2027", adminPass: "admin123" },
+            students: [
+                { id: "S1", name: "Alice Smith", class: "10", section: "A", roll: 1, username: "S101", password: "student123" },
+                { id: "S2", name: "Bob Jones", class: "10", section: "A", roll: 2, username: "S102", password: "student123" },
+                { id: "S3", name: "Charlie Brown", class: "9", section: "B", roll: 1, username: "S901", password: "student123" }
+            ],
+            teachers: [
+                { id: "T1", name: "Mr. John Doe", class: "10", section: "A", username: "teacher10", password: "teacher123" }
+            ],
+            attendance: {}, // key: "YYYY-MM-DD_StudentID" -> { status: 'Present'/'Late'/'Absent', arrival: '08:30 AM' }
+            lateApplications: [], // { id, studentId, studentName, class, section, reason, status: 'Pending' }
+            homework: [
+                { id: "H1", class: "10", subject: "Mathematics", title: "Trigonometry Problem Set", desc: "Solve questions 1 through 15 on page 42.", dueDate: "2026-03-10" }
+            ],
+            materials: [
+                { id: "M1", class: "10", title: "Physics Mechanics Formula Sheet", url: "https://example.com/physics.pdf" }
+            ],
+            goals: {} // studentId -> [{id, text, completed}]
+        };
+
+        let db = JSON.parse(localStorage.getItem("edusphere_db")) || DEFAULT_DB;
+        let currentUser = null;
+
+        function saveDB() {
+            localStorage.setItem("edusphere_db", JSON.stringify(db));
+        }
+
+        /* ================= ROUTING & URL WATCHER ================= */
+        function router(viewName) {
+            document.querySelectorAll('.view').forEach(v => {
+                if(!v.id.includes('modal')) v.classList.remove('active');
+            });
+            document.getElementById(`view-${viewName}`).classList.add('active');
+            updateNavActions(viewName);
+        }
+
+        function updateNavActions(viewName) {
+            const navActions = document.getElementById('nav-actions');
+            if (viewName === 'login') {
+                navActions.innerHTML = `<span style="font-size: 0.9rem; color: var(--text-muted);">${db.school.name}</span>`;
+            } else {
+                navActions.innerHTML = `
+                    <span style="font-size: 0.9rem; font-weight: 600;">${currentUser?.name || currentUser?.username || 'User'}</span>
+                    <button class="btn btn-outline" style="padding: 0.3rem 0.8rem; font-size: 0.8rem;" onclick="logout()">Logout</button>
+                `;
+            }
+        }
+
+        // Secret URL watcher for Admin Panel access (#admin or ?access=admin)
+        window.addEventListener('DOMContentLoaded', () => {
+            const hash = window.location.hash;
+            const params = new URLSearchParams(window.location.search);
+            
+            if (hash === '#admin' || params.get('access') === 'admin') {
+                document.getElementById('admin-secret-hint').classList.remove('hidden');
+            }
+            
+            // Set school title default config
+            document.getElementById('config-school-name').value = db.school.name;
+        });
+
+        /* ================= AUTHENTICATION ================= */
+        function switchLoginRole(role) {
+            document.querySelectorAll('.role-tab').forEach(t => t.classList.remove('active'));
+            event.target.classList.add('active');
+            document.getElementById('login-role').value = role;
+
+            const fieldUsername = document.getElementById('field-username');
+            const fieldSchool = document.getElementById('field-school');
+
+            if (role === 'admin') {
+                fieldUsername.classList.add('hidden');
+                fieldSchool.classList.remove('hidden');
+                document.getElementById('input-username').removeAttribute('required');
+                document.getElementById('input-admin-pass').setAttribute('required', 'true');
+            } else {
+                fieldUsername.classList.remove('hidden');
+                fieldSchool.classList.add('hidden');
+                document.getElementById('input-username').setAttribute('required', 'true');
+                document.getElementById('input-admin-pass').removeAttribute('required');
+            }
+        }
+
+        function handleLogin(event) {
+            event.preventDefault();
+            const role = document.getElementById('login-role').value;
+            const password = document.getElementById('input-password').value;
+
+            if (role === 'admin') {
+                const adminPass = document.getElementById('input-admin-pass').value;
+                if (adminPass === db.school.adminPass || password === db.school.adminPass) {
+                    currentUser = { role: 'admin', name: 'Administrator' };
+                    router('admin');
+                    renderAdminStudents();
+                    renderAdminTeachers();
+                } else {
+                    alert('Invalid Admin Credentials!');
+                }
+            } else if (role === 'teacher') {
+                const username = document.getElementById('input-username').value;
+                const teacher = db.teachers.find(t => t.username === username && t.password === password);
+                if (teacher) {
+                    currentUser = teacher;
+                    currentUser.role = 'teacher';
+                    router('teacher');
+                    renderTeacherAttendanceTable();
+                    renderTeacherLateRequests();
+                    renderCourseTracker();
+                } else {
+                    alert('Invalid Teacher credentials!');
+                }
+            } else if (role === 'student') {
+                const username = document.getElementById('input-username').value;
+                const student = db.students.find(s => s.username === username && s.password === password);
+                if (student) {
+                    currentUser = student;
+                    currentUser.role = 'student';
+                    router('student');
+                    renderStudentDashboard();
+                } else {
+                    alert('Invalid Student credentials!');
+                }
+            }
+        }
+
+        function logout() {
+            currentUser = null;
+            router('login');
+        }
+
+        /* ================= ADMIN WORKFLOW ================= */
+        function switchAdminTab(tabName) {
+            document.querySelectorAll('#view-admin .sidebar-item').forEach(i => i.classList.remove('active'));
+            event.target.classList.add('active');
+            document.querySelectorAll('.admin-subview').forEach(s => s.classList.add('hidden'));
+            document.getElementById(`admin-tab-${tabName}`).classList.remove('hidden');
+        }
+
+        function saveSchoolConfig(event) {
+            event.preventDefault();
+            db.school.name = document.getElementById('config-school-name').value;
+            db.school.session = document.getElementById('config-session').value;
+            saveDB();
+            alert('School settings updated successfully!');
+        }
+
+        function openAddStudentModal() {
+            document.getElementById('modal-add-student').style.display = 'flex';
+        }
+
+        function openAddTeacherModal() {
+            document.getElementById('modal-add-teacher').style.display = 'flex';
+        }
+
+        function closeModals() {
+            document.querySelectorAll('[id^="modal-"]').forEach(m => m.style.display = 'none');
+        }
+
+        function handleCreateStudent(event) {
+            event.preventDefault();
+            const name = document.getElementById('reg-name').value;
+            const cls = document.getElementById('reg-class').value;
+            const sec = document.getElementById('reg-section').value;
+            const roll = document.getElementById('reg-roll').value;
+            
+            const newStudent = {
+                id: 'S' + Date.now(),
+                name, class: cls, section: sec, roll: Number(roll),
+                username: `s${cls}${roll}`,
+                password: 'student123'
+            };
+
+            db.students.push(newStudent);
+            saveDB();
+            closeModals();
+            renderAdminStudents();
+            alert(`Student registered successfully! Default password is "student123". Username: ${newStudent.username}`);
+        }
+
+        function handleCreateTeacher(event) {
+            event.preventDefault();
+            const newTeacher = {
+                id: 'T' + Date.now(),
+                name: document.getElementById('t-name').value,
+                class: document.getElementById('t-class').value,
+                section: document.getElementById('t-section').value,
+                username: document.getElementById('t-user').value,
+                password: document.getElementById('t-pass').value
+            };
+            db.teachers.push(newTeacher);
+            saveDB();
+            closeModals();
+            renderAdminTeachers();
+            alert('Teacher registered successfully!');
+        }
+
+        function renderAdminStudents() {
+            const tbody = document.querySelector('#admin-students-table tbody');
+            tbody.innerHTML = db.students.map(s => `
+                <tr>
+                    <td>${s.roll}</td>
+                    <td>${s.name}</td>
+                    <td>Class ${s.class}</td>
+                    <td>Section ${s.section}</td>
+                    <td><code>${s.username}</code></td>
+                    <td><button class="btn btn-outline" style="padding: 0.2rem 0.5rem; font-size: 0.75rem;" onclick="resetStudentPassword('${s.id}')">Reset Pass</button></td>
+                </tr>
+            `).join('');
+        }
+
+        function renderAdminTeachers() {
+            const tbody = document.querySelector('#admin-teachers-table tbody');
+            tbody.innerHTML = db.teachers.map(t => `
+                <tr>
+                    <td>${t.name}</td>
+                    <td>Class ${t.class}</td>
+                    <td>Section ${t.section}</td>
+                    <td><code>${t.username}</code></td>
+                    <td><button class="btn btn-outline" style="padding: 0.2rem 0.5rem; font-size: 0.75rem;" onclick="resetTeacherPassword('${t.id}')">Reset Pass</button></td>
+                </tr>
+            `).join('');
+        }
+
+        function resetStudentPassword(id) {
+            const s = db.students.find(x => x.id === id);
+            if(s) {
+                s.password = 'student123';
+                saveDB();
+                alert(`Password reset to "student123" for ${s.name}`);
+            }
+        }
+
+        function resetTeacherPassword(id) {
+            const t = db.teachers.find(x => x.id === id);
+            if(t) {
+                t.password = 'teacher123';
+                saveDB();
+                alert(`Password reset to "teacher123" for ${t.name}`);
+            }
+        }
+
+        /* ================= TEACHER WORKFLOW ================= */
+        function switchTeacherTab(tabName) {
+            document.querySelectorAll('#view-teacher .sidebar-item').forEach(i => i.classList.remove('active'));
+            event.target.classList.add('active');
+            document.querySelectorAll('.teacher-subview').forEach(s => s.classList.add('hidden'));
+            document.getElementById(`teacher-tab-${tabName}`).classList.remove('hidden');
+        }
+
+        function renderTeacherAttendanceTable() {
+            const cls = document.getElementById('att-filter-class').value;
+            const sec = document.getElementById('att-filter-section').value;
+            const today = new Date().toISOString().split('T')[0];
+
+            const students = db.students.filter(s => s.class === cls && s.section === sec);
+            const tbody = document.querySelector('#teacher-attendance-table tbody');
+
+            tbody.innerHTML = students.map(s => {
+                const key = `${today}_${s.id}`;
+                const record = db.attendance[key] || { status: 'Present', arrival: '08:00 AM' };
+                return `
+                    <tr>
+                        <td>${s.roll}</td>
+                        <td>${s.name}</td>
+                        <td><span class="badge ${record.status === 'Present' ? 'badge-success' : (record.status === 'Late' ? 'badge-warning' : 'badge-danger')}">${record.status}</span></td>
+                        <td>${record.arrival}</td>
+                        <td>
+                            <button class="btn btn-outline" style="padding:0.2rem 0.4rem; font-size:0.75rem;" onclick="markAttendance('${s.id}', 'Present')">Present</button>
+                            <button class="btn btn-outline" style="padding:0.2rem 0.4rem; font-size:0.75rem;" onclick="markAttendance('${s.id}', 'Late')">Late</button>
+                            <button class="btn btn-outline" style="padding:0.2rem 0.4rem; font-size:0.75rem;" onclick="markAttendance('${s.id}', 'Absent')">Absent</button>
+                        </td>
+                    </tr>
+                `;
+            }).join('');
+        }
+
+        function markAttendance(studentId, status) {
+            const today = new Date().toISOString().split('T')[0];
+            const key = `${today}_${studentId}`;
+            const timeStr = new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
+            db.attendance[key] = { status, arrival: timeStr };
+            saveDB();
+            renderTeacherAttendanceTable();
+        }
+
+        function renderTeacherLateRequests() {
+            const tbody = document.querySelector('#teacher-late-requests-table tbody');
+            tbody.innerHTML = db.lateApplications.map(req => `
+                <tr>
+                    <td>${req.studentName} (Class ${req.class}-${req.section})</td>
+                    <td>${req.reason}</td>
+                    <td>
+                        ${req.status === 'Pending' ? `<button class="btn" style="padding: 0.2rem 0.5rem; font-size: 0.75rem;" onclick="approveLate('${req.id}')">Approve as Late</button>` : `<span class="badge badge-success">Approved</span>`}
+                    </td>
+                </tr>
+            `).join('');
+        }
+
+        function approveLate(reqId) {
+            const req = db.lateApplications.find(r => r.id === reqId);
+            if(req) {
+                req.status = 'Approved';
+                const today = new Date().toISOString().split('T')[0];
+                db.attendance[`${today}_${req.studentId}`] = { status: 'Late', arrival: '09:15 AM (Approved)' };
+                saveDB();
+                renderTeacherLateRequests();
+            }
+        }
+
+        function handleTeacherPostHomework(event) {
+            event.preventDefault();
+            const newHw = {
+                id: 'H' + Date.now(),
+                class: document.getElementById('hw-class').value,
+                subject: document.getElementById('hw-subject').value,
+                title: document.getElementById('hw-desc').value,
+                dueDate: document.getElementById('hw-date').value
+            };
+            db.homework.push(newHw);
+            saveDB();
+            alert('Homework assignment published successfully!');
+            event.target.reset();
+        }
+
+        function handleTeacherPostMaterial(event) {
+            event.preventDefault();
+            const newMat = {
+                id: 'M' + Date.now(),
+                class: document.getElementById('mat-class').value,
+                title: document.getElementById('mat-title').value,
+                url: document.getElementById('mat-url').value
+            };
+            db.materials.push(newMat);
+            saveDB();
+            alert('Study material uploaded for grade successfully!');
+            event.target.reset();
+        }
+
+        function renderCourseTracker() {
+            const grade = document.getElementById('course-track-grade').value;
+            const container = document.getElementById('course-progress-container');
+            
+            // Dummy syllabus chapters per grade
+            const syllabus = [
+                { chapter: "Chapter 1: Foundations", progress: 100 },
+                { chapter: "Chapter 2: Advanced Theories", progress: 75 },
+                { chapter: "Chapter 3: Practical Applications", progress: 40 },
+                { chapter: "Chapter 4: Final Assessment Prep", progress: 10 }
+            ];
+
+            container.innerHTML = syllabus.map(s => `
+                <div style="margin-bottom: 1rem;">
+                    <div style="display: flex; justify-content: space-between; font-size: 0.9rem; margin-bottom: 0.3rem;">
+                        <span>${s.chapter}</span>
+                        <span>${s.progress}% Completed</span>
+                    </div>
+                    <div style="width: 100%; height: 8px; background: var(--card-bg); border-radius: 4px; overflow: hidden;">
+                        <div style="width: ${s.progress}%; height: 100%; background: var(--primary);"></div>
+                    </div>
+                </div>
+            `).join('');
+        }
+
+        /* ================= STUDENT WORKFLOW ================= */
+        function switchStudentTab(tabName) {
+            document.querySelectorAll('#view-student .sidebar-item').forEach(i => i.classList.remove('active'));
+            event.target.classList.add('active');
+            document.querySelectorAll('.student-subview').forEach(s => s.classList.add('hidden'));
+            document.getElementById(`student-tab-${tabName}`).classList.remove('hidden');
+        }
+
+        function renderStudentDashboard() {
+            document.getElementById('student-welcome-name').innerText = currentUser.name;
+            
+            // Attendance Status Box
+            const today = new Date().toISOString().split('T')[0];
+            const record = db.attendance[`${today}_${currentUser.id}`] || { status: 'Not Marked Yet', arrival: '--' };
+            document.getElementById('student-attendance-status-box').innerHTML = `
+                Status: <span class="badge ${record.status === 'Present' ? 'badge-success' : (record.status === 'Late' ? 'badge-warning' : 'badge-danger')}">${record.status}</span><br>
+                <span style="font-size: 0.85rem; font-weight: normal; color: var(--text-muted);">Recorded Arrival: ${record.arrival}</span>
+            `;
+
+            // Homework Counter & List
+            const gradeHw = db.homework.filter(h => h.class === currentUser.class);
+            document.getElementById('student-homework-counter').innerText = `${gradeHw.length} Tasks Due`;
+            
+            document.getElementById('student-homework-list').innerHTML = gradeHw.map(h => `
+                <div class="card">
+                    <span class="badge" style="background: var(--card-bg); color: var(--primary);">${h.subject}</span>
+                    <h4 style="margin: 0.5rem 0;">${h.title}</h4>
+                    <p style="font-size: 0.85rem; color: var(--text-muted);">Due Date: ${h.dueDate}</p>
+                </div>
+            `).join('');
+
+            // Materials list (Grade-wide access)
+            const gradeMats = db.materials.filter(m => m.class === currentUser.class);
+            document.getElementById('student-materials-list').innerHTML = gradeMats.map(m => `
+                <div class="card" style="display: flex; justify-content: space-between; align-items: center;">
+                    <div>
+                        <h4>${m.title}</h4>
+                        <p style="font-size: 0.85rem; color: var(--text-muted);">Class ${m.class} Shared Resource</p>
+                    </div>
+                    <a href="${m.url}" target="_blank" class="btn" style="text-decoration: none; font-size: 0.85rem;">Access File</a>
+                </div>
+            `).join('');
+
+            renderStudentGoals();
+        }
+
+        function submitLateApplication() {
+            const reason = document.getElementById('late-reason').value;
+            if(!reason) return alert('Please enter a reason.');
+
+            db.lateApplications.push({
+                id: 'LA' + Date.now(),
+                studentId: currentUser.id,
+                studentName: currentUser.name,
+                class: currentUser.class,
+                section: currentUser.section,
+                reason,
+                status: 'Pending'
+            });
+            saveDB();
+            alert('Late arrival notice submitted successfully to main teacher.');
+            document.getElementById('late-reason').value = '';
+        }
+
+        function addStudentGoal() {
+            const text = document.getElementById('new-goal-text').value;
+            if(!text) return;
+
+            if(!db.goals[currentUser.id]) db.goals[currentUser.id] = [];
+            db.goals[currentUser.id].push({ id: 'G' + Date.now(), text, completed: false });
+            saveDB();
+            document.getElementById('new-goal-text').value = '';
+            renderStudentGoals();
+        }
+
+        function toggleStudentGoal(goalId) {
+            const goals = db.goals[currentUser.id] || [];
+            const g = goals.find(x => x.id === goalId);
+            if(g) {
+                g.completed = !g.completed;
+                saveDB();
+                renderStudentGoals();
+            }
+        }
+
+        function renderStudentGoals() {
+            const goals = db.goals[currentUser.id] || [];
+            const container = document.getElementById('student-goals-container');
+            
+            if(goals.length === 0) {
+                container.innerHTML = `<p style="color: var(--text-muted); font-size: 0.9rem;">No active study goals set yet. Add one above!</p>`;
+                return;
+            }
+
+            container.innerHTML = goals.map(g => `
+                <div style="display: flex; align-items: center; gap: 0.75rem; padding: 0.5rem 0; border-bottom: 1px solid var(--border-color);">
+                    <input type="checkbox" ${g.completed ? 'checked' : ''} onchange="toggleStudentGoal('${g.id}')" style="width: auto; margin:0;">
+                    <span style="font-size: 0.95rem; ${g.completed ? 'text-decoration: line-through; color: var(--text-muted);' : ''}">${g.text}</span>
+                </div>
+            `).join('');
+        }
+    </script>
+</body>
+
+</html>
