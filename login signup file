@@ -1,0 +1,812 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <!-- Basic Setup -->
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>AttendX AI — Create Account</title>
+
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=Sora:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+
+    <!-- Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css">
+
+    <!-- Combined & Harmonized CSS -->
+    <style>
+        :root {
+            /* Ocean Teal Color Palette Harmonized with AttendX */
+            --midnight-teal: #013137;
+            --ocean-teal: #215E68;
+            --dusty-turquoise: #297376;
+            --soft-seafoam: #5C9396;
+            --pale-ice-blue: #C1D9DE;
+            
+            /* Theme mapping */
+            --navy: #013137;
+            --aqua: #297376;
+            --mint: #5C9396;
+            --yellow: #F4C95D;
+            --pink: #FFF4F4;
+            --glass: rgba(255, 255, 255, 0.08);
+            
+            --bg-main: #C1D9DE;
+            --surface-card: #013137;
+            --surface-hover: rgba(1, 49, 55, 0.75);
+            --border-subtle: rgba(193, 217, 222, 0.18);
+            --text-main: #ffffff;
+            --text-muted: #C1D9DE;
+            --accent: #297376;
+            
+            --error-color: #ff6b6b;
+            --error-bg: rgba(255, 107, 107, 0.1);
+            --error-border: rgba(255, 107, 107, 0.3);
+
+            --radius: 20px;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            -webkit-tap-highlight-color: transparent;
+        }
+
+        html, body {
+            width: 100%;
+            height: 100%;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            background-color: var(--midnight-teal);
+            color: #ffffff;
+            display: grid;
+            place-items: center;
+            position: relative;
+            overflow-x: hidden;
+            overflow-y: auto;
+            min-height: 100vh;
+        }
+
+        /* ---------- BACKGROUND & AMBIENT GLOWS ---------- */
+        .gradient-bg {
+            position: fixed;
+            inset: 0;
+            background: 
+            radial-gradient(circle at top left, rgba(92, 147, 150, 0.25), transparent 40%),
+            radial-gradient(circle at bottom right, rgba(33, 94, 104, 0.3), transparent 45%),
+            radial-gradient(circle at center, rgba(41, 115, 118, 0.15), transparent 60%),
+            var(--midnight-teal);
+            z-index: -5;
+        }
+
+        .grid {
+            position: fixed;
+            inset: 0;
+            background-image: 
+            linear-gradient(rgba(193, 217, 222, 0.04) 1px, transparent 1px),
+            linear-gradient(90deg, rgba(193, 217, 222, 0.04) 1px, transparent 1px);
+            background-size: 45px 45px;
+            z-index: -4;
+        }
+
+        .blob {
+            position: fixed;
+            border-radius: 50%;
+            filter: blur(80px);
+            opacity: 0.35;
+            animation: float 14s infinite ease-in-out;
+            pointer-events: none;
+            z-index: -3;
+        }
+
+        .blob1 {
+            width: 350px;
+            height: 350px;
+            background: var(--soft-seafoam);
+            top: -120px;
+            left: -100px;
+        }
+
+        .blob2 {
+            width: 320px;
+            height: 320px;
+            background: var(--dusty-turquoise);
+            right: -80px;
+            top: 200px;
+            animation-delay: 2s;
+        }
+
+        .blob3 {
+            width: 260px;
+            height: 260px;
+            background: var(--ocean-teal);
+            bottom: -100px;
+            left: 45%;
+            animation-delay: 4s;
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-35px); }
+        }
+
+        /* ---------- PORTAL WRAPPER & CARD (Sleek & Compact) ---------- */
+        .portal-wrapper {
+            position: relative;
+            z-index: 10;
+            width: 100%;
+            max-width: 400px;
+            padding: 20px 14px;
+            margin: auto;
+        }
+
+        .portal-card {
+            background: rgba(1, 49, 55, 0.72);
+            border: 1px solid var(--border-subtle);
+            border-radius: var(--radius);
+            padding: 28px 24px;
+            backdrop-filter: blur(24px);
+            -webkit-backdrop-filter: blur(24px);
+            box-shadow: 0 20px 45px rgba(0, 0, 0, 0.35);
+            transform: translateY(0);
+            transition: transform 0.5s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.5s cubic-bezier(0.16, 1, 0.3, 1), border-color 0.3s ease;
+        }
+
+        .portal-card:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 25px 55px rgba(0, 0, 0, 0.45);
+            border-color: var(--pale-ice-blue);
+        }
+
+        @media (min-width: 480px) {
+            .portal-card {
+                padding: 32px 28px;
+            }
+        }
+
+        /* Avatar Container */
+        .avatar-container {
+            display: flex;
+            justify-content: center;
+            margin-bottom: 16px;
+        }
+
+        .user-avatar {
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, var(--pale-ice-blue), var(--soft-seafoam));
+            border: 2px solid rgba(1, 49, 55, 0.8);
+            box-shadow: 0 6px 16px rgba(0, 0, 0, 0.25);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--midnight-teal);
+            transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+
+        .portal-card:hover .user-avatar {
+            transform: scale(1.06) rotate(3deg);
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.35);
+        }
+
+        .user-avatar svg {
+            width: 26px;
+            height: 26px;
+            fill: currentColor;
+            transition: transform 0.3s ease;
+        }
+
+        /* Header */
+        .portal-header {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+
+        .portal-header h1 {
+            font-size: 1.35rem;
+            font-weight: 800;
+            letter-spacing: -0.02em;
+            color: #ffffff;
+            margin-bottom: 4px;
+        }
+
+        .portal-header p {
+            font-size: 0.8rem;
+            color: var(--pale-ice-blue);
+            opacity: 0.8;
+            font-weight: 500;
+        }
+
+        /* Role Switcher Tabs */
+        .role-switch {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            background: rgba(255, 255, 255, 0.04);
+            padding: 3px;
+            border-radius: 14px;
+            margin-bottom: 20px;
+            border: 1px solid rgba(193, 217, 222, 0.1);
+            position: relative;
+        }
+
+        .role-btn {
+            background: transparent;
+            border: none;
+            color: var(--pale-ice-blue);
+            font-family: inherit;
+            font-size: 0.8rem;
+            font-weight: 600;
+            padding: 8px;
+            cursor: pointer;
+            border-radius: 10px;
+            transition: color 0.3s ease, background 0.3s ease, transform 0.2s ease;
+            opacity: 0.75;
+        }
+
+        .role-btn:active {
+            transform: scale(0.97);
+        }
+
+        .role-btn.active {
+            color: var(--midnight-teal);
+            background: linear-gradient(90deg, var(--pale-ice-blue), var(--soft-seafoam));
+            box-shadow: 0 3px 10px rgba(41, 115, 118, 0.25);
+            opacity: 1;
+            font-weight: 700;
+        }
+
+        /* Forms Layout & Panels */
+        .form-container {
+            position: relative;
+            overflow: visible;
+        }
+
+        .auth-panel {
+            display: none;
+            opacity: 0;
+            transform: translateX(15px);
+            transition: opacity 0.4s cubic-bezier(0.16, 1, 0.3, 1), transform 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+
+        .auth-panel.active {
+            display: block;
+            opacity: 1;
+            transform: translateX(0);
+        }
+
+        .input-group {
+            margin-bottom: 14px;
+        }
+
+        .input-group label {
+            display: block;
+            font-size: 0.7rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            color: var(--pale-ice-blue);
+            margin-bottom: 5px;
+            opacity: 0.9;
+        }
+
+        .input-field {
+            width: 100%;
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(193, 217, 222, 0.15);
+            border-radius: 12px;
+            padding: 11px 14px;
+            font-family: inherit;
+            font-size: 0.9rem;
+            color: #ffffff;
+            transition: border-color 0.3s ease, background 0.3s ease, box-shadow 0.3s ease;
+            outline: none;
+        }
+
+        .input-field::placeholder {
+            color: rgba(193, 217, 222, 0.4);
+        }
+
+        .input-field:focus {
+            border-color: var(--pale-ice-blue);
+            background: rgba(1, 49, 55, 0.9);
+            box-shadow: 0 0 0 3px rgba(92, 147, 150, 0.2);
+        }
+
+        /* ---------- EASY & SEXY SCHOOL AUTOCOMPLETE INPUT ---------- */
+        .school-input-wrapper {
+            position: relative;
+        }
+
+        .school-suggestions-list {
+            position: absolute;
+            top: calc(100% + 4px);
+            left: 0;
+            width: 100%;
+            background: rgba(1, 35, 42, 0.96);
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
+            border: 1px solid rgba(193, 217, 222, 0.25);
+            border-radius: 12px;
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.5);
+            list-style: none;
+            max-height: 160px;
+            overflow-y: auto;
+            display: none;
+            z-index: 100;
+            scrollbar-width: thin;
+            scrollbar-color: var(--soft-seafoam) transparent;
+        }
+
+        .school-suggestions-list.open {
+            display: block;
+        }
+
+        .school-suggestion-item {
+            padding: 10px 14px;
+            font-size: 0.88rem;
+            color: var(--pale-ice-blue);
+            cursor: pointer;
+            transition: background 0.2s ease, padding-left 0.2s ease, color 0.2s ease;
+            font-weight: 500;
+        }
+
+        .school-suggestion-item:hover {
+            background: rgba(92, 147, 150, 0.3);
+            color: #ffffff;
+            padding-left: 18px;
+        }
+
+        /* Submit Button */
+        .submit-btn {
+            width: 100%;
+            background: linear-gradient(90deg, var(--pale-ice-blue), var(--soft-seafoam));
+            color: var(--midnight-teal);
+            border: none;
+            border-radius: 50px;
+            padding: 12px;
+            font-family: inherit;
+            font-size: 0.95rem;
+            font-weight: 700;
+            cursor: pointer;
+            transition: 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+            margin-top: 8px;
+            box-shadow: 0 5px 16px rgba(41, 115, 118, 0.25);
+        }
+
+        .submit-btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 12px 25px rgba(92, 147, 150, 0.4);
+            background: #ffffff;
+            color: var(--midnight-teal);
+        }
+
+        .submit-btn:active {
+            transform: translateY(0);
+        }
+
+        /* Modal Overlay Popup */
+        .modal-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            background: rgba(1, 25, 30, 0.7);
+            backdrop-filter: blur(6px);
+            -webkit-backdrop-filter: blur(6px);
+            display: grid;
+            place-items: center;
+            padding: 16px;
+            z-index: 1000;
+            opacity: 0;
+            pointer-events: none;
+            transition: opacity 0.35s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+
+        .modal-overlay.active {
+            opacity: 1;
+            pointer-events: auto;
+        }
+
+        .error-modal {
+            background: #012830;
+            border: 1px solid var(--error-border);
+            border-radius: 18px;
+            width: 100%;
+            max-width: 330px;
+            padding: 28px 20px;
+            text-align: center;
+            box-shadow: 0 25px 50px rgba(0, 0, 0, 0.5);
+            transform: scale(0.9) translateY(15px);
+            transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+
+        .modal-overlay.active .error-modal {
+            transform: scale(1) translateY(0);
+        }
+
+        .error-modal-icon {
+            width: 46px;
+            height: 46px;
+            background: var(--error-bg);
+            color: var(--error-color);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 14px auto;
+            font-size: 1.1rem;
+            font-weight: bold;
+            border: 1px solid var(--error-border);
+            animation: pulseIcon 2s infinite ease-in-out;
+        }
+
+        @keyframes pulseIcon {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.08); }
+        }
+
+        .error-modal h3 {
+            font-size: 1.05rem;
+            font-weight: 700;
+            color: #ffffff;
+            margin-bottom: 6px;
+        }
+
+        .error-modal p {
+            font-size: 0.85rem;
+            color: var(--pale-ice-blue);
+            opacity: 0.8;
+            margin-bottom: 18px;
+            line-height: 1.4;
+            font-weight: 500;
+        }
+
+        .error-modal-btn {
+            width: 100%;
+            background: linear-gradient(90deg, var(--pale-ice-blue), var(--soft-seafoam));
+            color: var(--midnight-teal);
+            border: none;
+            border-radius: 50px;
+            padding: 10px;
+            font-family: inherit;
+            font-size: 0.9rem;
+            font-weight: 700;
+            cursor: pointer;
+            transition: 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+            box-shadow: 0 5px 16px rgba(41, 115, 118, 0.25);
+        }
+
+        .error-modal-btn:hover {
+            background: #ffffff;
+            transform: translateY(-2px);
+        }
+
+        /* Footer Meta */
+        .portal-footer-meta {
+            text-align: center;
+            margin-top: 18px;
+            font-size: 0.7rem;
+            color: var(--pale-ice-blue);
+            opacity: 0.6;
+            font-weight: 600;
+        }
+    </style>
+</head>
+
+<body>
+
+    <!-- Background Ambiance -->
+    <div class="gradient-bg"></div>
+    <div class="grid"></div>
+    <div class="blob blob1"></div>
+    <div class="blob blob2"></div>
+    <div class="blob blob3"></div>
+
+    <div class="portal-wrapper">
+        <div class="portal-card">
+            
+            <!-- User Avatar -->
+            <div class="avatar-container">
+                <div class="user-avatar" id="user-avatar-icon">
+                    <svg viewBox="0 0 24 24">
+                        <path d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z"/>
+                    </svg>
+                </div>
+            </div>
+
+            <div class="portal-header">
+                <h1 id="portal-title">Student Sign Up</h1>
+                <p id="portal-subtitle">Create your AttendX AI account</p>
+            </div>
+
+            <!-- Role Switcher Component -->
+            <div class="role-switch" role="tablist">
+                <button type="button" class="role-btn active" id="tab-student" role="tab" aria-selected="true" data-role="student">Student</button>
+                <button type="button" class="role-btn" id="tab-teacher" role="tab" aria-selected="false" data-role="teacher">Teacher</button>
+            </div>
+
+            <div class="form-container">
+                <!-- Student Signup Form Panel -->
+                <form id="form-student" class="auth-panel active" novalidate>
+                    <div class="input-group">
+                        <label>School Institution</label>
+                        <div class="school-input-wrapper">
+                            <input type="text" id="student-school" class="input-field" placeholder="Type or select school name..." autocomplete="off" required>
+                            <ul class="school-suggestions-list" id="student-school-suggestions">
+                                <li class="school-suggestion-item">Fluorescent Secondary School</li>
+                                <li class="school-suggestion-item">Apex Modern Academy</li>
+                                <li class="school-suggestion-item">Global Institute of Tech</li>
+                                <li class="school-suggestion-item">Oxford International College</li>
+                                <li class="school-suggestion-item">Harvard Westlake Academy</li>
+                                <li class="school-suggestion-item">Stanford Community High</li>
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="input-group">
+                        <label for="student-userid">Student User ID</label>
+                        <input type="text" id="student-userid" class="input-field" placeholder="student123" autocomplete="username" required>
+                    </div>
+                    <div class="input-group">
+                        <label for="student-password">Password</label>
+                        <input type="password" id="student-password" class="input-field" placeholder="••••••••" autocomplete="new-password" required>
+                    </div>
+                    <button type="submit" class="submit-btn">Create Student Account</button>
+                </form>
+
+                <!-- Teacher Signup Form Panel -->
+                <form id="form-teacher" class="auth-panel" novalidate>
+                    <div class="input-group">
+                        <label>School Institution</label>
+                        <div class="school-input-wrapper">
+                            <input type="text" id="teacher-school" class="input-field" placeholder="Type or select school name..." autocomplete="off" required>
+                            <ul class="school-suggestions-list" id="teacher-school-suggestions">
+                                <li class="school-suggestion-item">Fluorescent Secondary School</li>
+                                <li class="school-suggestion-item">Apex Modern Academy</li>
+                                <li class="school-suggestion-item">Global Institute of Tech</li>
+                                <li class="school-suggestion-item">Oxford International College</li>
+                                <li class="school-suggestion-item">Harvard Westlake Academy</li>
+                                <li class="school-suggestion-item">Stanford Community High</li>
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="input-group">
+                        <label for="teacher-userid">Teacher User ID</label>
+                        <input type="text" id="teacher-userid" class="input-field" placeholder="teacher123" autocomplete="username" required>
+                    </div>
+                    <div class="input-group">
+                        <label for="teacher-password">Password</label>
+                        <input type="password" id="teacher-password" class="input-field" placeholder="••••••••" autocomplete="new-password" required>
+                    </div>
+                    <button type="submit" class="submit-btn">Create Teacher Account</button>
+                </form>
+            </div>
+
+            <div class="portal-footer-meta">
+                AttendX AI &bull; Secure Registration Portal
+            </div>
+
+        </div>
+    </div>
+
+    <!-- Error Modal Popup Overlay -->
+    <div class="modal-overlay" id="error-modal-overlay">
+        <div class="error-modal">
+            <div class="error-modal-icon">✕</div>
+            <h3>Registration Notice</h3>
+            <p id="error-modal-message">Please fill in all required fields to create your account.</p>
+            <button type="button" class="error-modal-btn" id="error-modal-close">Got It</button>
+        </div>
+    </div>
+
+    <!-- JavaScript Integration -->
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const tabStudent = document.getElementById('tab-student');
+            const tabTeacher = document.getElementById('tab-teacher');
+            const formStudent = document.getElementById('form-student');
+            const formTeacher = document.getElementById('form-teacher');
+            const portalTitle = document.getElementById('portal-title');
+            const portalSubtitle = document.getElementById('portal-subtitle');
+            
+            const errorModalOverlay = document.getElementById('error-modal-overlay');
+            const errorModalMessage = document.getElementById('error-modal-message');
+            const errorModalClose = document.getElementById('error-modal-close');
+
+            if (!tabStudent || !tabTeacher || !formStudent || !formTeacher || !portalTitle || !portalSubtitle) return;
+
+            let currentActiveRole = 'student';
+
+            function switchRole(targetRole) {
+                if (currentActiveRole === targetRole) return;
+                currentActiveRole = targetRole;
+
+                if (targetRole === 'student') {
+                    tabStudent.classList.add('active');
+                    tabStudent.setAttribute('aria-selected', 'true');
+                    tabTeacher.classList.remove('active');
+                    tabTeacher.setAttribute('aria-selected', 'false');
+
+                    formStudent.classList.add('active');
+                    formTeacher.classList.remove('active');
+
+                    portalTitle.textContent = "Student Sign Up";
+                    portalSubtitle.textContent = "Create your AttendX AI account";
+                } else {
+                    tabTeacher.classList.add('active');
+                    tabTeacher.setAttribute('aria-selected', 'true');
+                    tabStudent.classList.remove('active');
+                    tabStudent.setAttribute('aria-selected', 'false');
+
+                    formTeacher.classList.add('active');
+                    formStudent.classList.remove('active');
+
+                    portalTitle.textContent = "Teacher Sign Up";
+                    portalSubtitle.textContent = "Create your AttendX AI account";
+                }
+            }
+
+            tabStudent.addEventListener('click', () => switchRole('student'));
+            tabTeacher.addEventListener('click', () => switchRole('teacher'));
+
+            // ====================================================================================
+            // 🌟 1. DATABASE OF VALID USERNAMES AND PASSWORDS (EDITABLE)
+            // ====================================================================================
+            const VALID_ACCOUNTS = {
+                student: [
+                    { userid: "student123", password: "password123" },
+                    { userid: "john_doe", password: "securepassword" },
+                    { userid: "alice99", password: "mypassword99" }
+                ],
+                teacher: [
+                    { userid: "teacher123", password: "teacherpassword123" },
+                    { userid: "drsmith", password: "smithpassword" }
+                ]
+            };
+
+            // ====================================================================================
+            // 🌟 2. REDIRECTION LINKS CONFIGURATION (EDITABLE - REPLACE '#' WITH YOUR LINKS)
+            // ====================================================================================
+            const REDIRECT_LINKS = {
+                student: "#", // <-- Put the student dashboard or target link here inside the quotes
+                teacher: "#"  // <-- Put the teacher dashboard or target link here inside the quotes
+            };
+            // ====================================================================================
+
+            function setupAutocomplete(inputId, listId) {
+                const input = document.getElementById(inputId);
+                const list = document.getElementById(listId);
+                if (!input || !list) return;
+
+                const items = list.querySelectorAll('.school-suggestion-item');
+
+                input.addEventListener('input', () => {
+                    const val = input.value.toLowerCase();
+                    let hasMatch = false;
+
+                    items.forEach(item => {
+                        const text = item.textContent.toLowerCase();
+                        if (text.includes(val)) {
+                            item.style.display = 'block';
+                            hasMatch = true;
+                        } else {
+                            item.style.display = 'none';
+                        }
+                    });
+
+                    if (hasMatch) {
+                        list.classList.add('open');
+                    } else {
+                        list.classList.remove('open');
+                    }
+                });
+
+                input.addEventListener('focus', () => {
+                    list.classList.add('open');
+                });
+
+                items.forEach(item => {
+                    item.addEventListener('click', (e) => {
+                        e.stopPropagation();
+                        input.value = item.textContent;
+                        list.classList.remove('open');
+                    });
+                });
+
+                document.addEventListener('click', (e) => {
+                    if (!input.contains(e.target) && !list.contains(e.target)) {
+                        list.classList.remove('open');
+                    }
+                });
+            }
+
+            setupAutocomplete('student-school', 'student-school-suggestions');
+            setupAutocomplete('teacher-school', 'teacher-school-suggestions');
+
+            let pendingRedirectUrl = null;
+
+            function showModalError(message, redirectUrl = null) {
+                errorModalMessage.textContent = message;
+                pendingRedirectUrl = redirectUrl;
+                errorModalOverlay.classList.add('active');
+            }
+
+            function hideModalError() {
+                errorModalOverlay.classList.remove('active');
+                if (pendingRedirectUrl && pendingRedirectUrl !== "#") {
+                    window.location.href = pendingRedirectUrl;
+                }
+                pendingRedirectUrl = null;
+            }
+
+            errorModalClose.addEventListener('click', hideModalError);
+            errorModalOverlay.addEventListener('click', (e) => {
+                if (e.target === errorModalOverlay) hideModalError();
+            });
+
+            function handleSignup(role) {
+                let schoolInput, userIdInput, passwordInput;
+
+                if (role === 'student') {
+                    schoolInput = document.getElementById('student-school');
+                    userIdInput = document.getElementById('student-userid');
+                    passwordInput = document.getElementById('student-password');
+                } else {
+                    schoolInput = document.getElementById('teacher-school');
+                    userIdInput = document.getElementById('teacher-userid');
+                    passwordInput = document.getElementById('teacher-password');
+                }
+
+                const school = schoolInput.value.trim();
+                const userId = userIdInput.value.trim();
+                const password = passwordInput.value;
+
+                if (!school || !userId || !password) {
+                    showModalError("Please complete all fields including school name, user ID, and password.");
+                    return;
+                }
+
+                if (password.length < 6) {
+                    showModalError("Your password must be at least 6 characters long.");
+                    passwordInput.focus();
+                    return;
+                }
+
+                // Check against valid account database
+                const accounts = VALID_ACCOUNTS[role];
+                const matchedAccount = accounts.find(acc => acc.userid === userId && acc.password === password);
+
+                if (!matchedAccount) {
+                    showModalError(`Invalid credentials for ${role}. Please check your User ID and Password against authorized accounts.`);
+                    return;
+                }
+
+                // Get specific link for this role
+                const targetLink = REDIRECT_LINKS[role];
+                showModalError(`Success! Account verified. Redirecting to your portal...`, targetLink);
+            }
+
+            formStudent.addEventListener('submit', (e) => {
+                e.preventDefault();
+                handleSignup('student');
+            });
+
+            formTeacher.addEventListener('submit', (e) => {
+                e.preventDefault();
+                handleSignup('teacher');
+            });
+        });
+    </script>
+</body>
+
+</html>
