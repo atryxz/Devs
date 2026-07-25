@@ -1,0 +1,421 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <!-- Basic Setup -->
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>AttendX AI</title>
+
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+    <link href="https://fonts.googleapis.com/css2?family=Sora:wght@300;400;500;600;700;800&family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+
+    <!-- Icons -->
+    <link rel="stylesheet"
+    href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css">
+
+    <!-- CSS -->
+    <link rel="stylesheet" href="global.css">
+    <link rel="stylesheet" href="test.css">
+
+</head>
+
+<body>
+
+<!--==================== BACKGROUND ====================-->
+
+<div class="gradient-bg"></div>
+
+<div class="grid"></div>
+
+<div class="blob blob1"></div>
+<div class="blob blob2"></div>
+<div class="blob blob3"></div>
+
+<!--==================== NAVBAR ====================-->
+
+<header>
+
+<nav>
+
+<div class="logo">
+
+<i class="fa-solid fa-qrcode"></i>
+
+<h2>AttendX AI</h2>
+
+</div>
+
+<ul>
+
+<li><a href="homepage.html">Home</a></li>
+
+<li><a href="#features">Features</a></li>
+
+<li><a href="#about">About</a></li>
+
+<li><a href="#contact">Contact</a></li>
+
+</ul>
+
+<div class="nav-buttons">
+
+<a href="2login.html" class="login-btn">
+
+Login
+
+</a>
+
+<a href="login.html" class="start-btn">
+
+Get Started
+
+</a>
+
+</div>
+
+</nav>
+
+</header>
+
+<!--==================== HERO ====================-->
+
+<section class="hero">
+
+<div class="hero-left">
+
+<div class="badge">
+
+<i class="fa-solid fa-bolt"></i>
+
+Smart Attendance Platform
+
+</div>
+
+<h1>
+
+Attendance
+
+<br>
+
+Made
+
+<span>Intelligent.</span>
+
+</h1>
+
+<p>
+
+AttendX AI is a QR-powered attendance platform
+designed for modern schools. Instantly record attendance,
+track analytics, reduce paperwork, and simplify classroom management.
+
+</p>
+
+<div class="hero-buttons">
+
+<a href="login.html" class="primary-btn">
+
+Get Started
+
+<i class="fa-solid fa-arrow-right"></i>
+
+</a>
+
+<a href="#features" class="secondary-btn">
+
+Explore Features
+
+</a>
+
+</div>
+
+<div class="stats">
+
+<div>
+
+<h2>500+</h2>
+
+<p>Students</p>
+
+</div>
+
+<div>
+
+<h2>98%</h2>
+
+<p>Accuracy</p>
+
+</div>
+
+<div>
+
+<h2>365</h2>
+
+<p>Days History</p>
+
+</div>
+
+</div>
+
+</div>
+
+<!--================ RIGHT =================-->
+
+<div class="hero-right">
+
+<div class="dashboard">
+
+<div class="dashboard-header">
+
+<h3>Teacher Dashboard</h3>
+
+<div class="online">
+
+● Live
+
+</div>
+
+</div>
+
+<div class="progress-box">
+
+<h4>Today's Attendance</h4>
+
+<div class="progress-circle">
+
+92%
+
+</div>
+
+</div>
+
+<div class="attendance-box">
+
+<div>
+
+<h3>184</h3>
+
+<p>Present</p>
+
+</div>
+
+<div>
+
+<h3>12</h3>
+
+<p>Absent</p>
+
+</div>
+
+<div>
+
+<h3>4</h3>
+
+<p>Late</p>
+
+</div>
+
+</div>
+
+<div class="graph">
+
+<div></div>
+
+<div></div>
+
+<div></div>
+
+<div></div>
+
+<div></div>
+
+<div></div>
+
+<div></div>
+
+</div>
+
+</div>
+
+<div class="phone">
+
+<div class="phone-screen">
+
+<i class="fa-solid fa-qrcode qr-icon"></i>
+
+<h4>Scan QR</h4>
+
+<p>Waiting for Student...</p>
+
+<div class="scan-line"></div>
+
+</div>
+
+</div>
+
+</div>
+
+</section>
+
+<!--================ FEATURES =================-->
+
+<section id="features" class="features">
+
+<h2>
+
+Everything you need.
+
+Nothing you don't.
+
+</h2>
+
+<div class="feature-grid">
+
+<div class="feature-card">
+
+<i class="fa-solid fa-qrcode"></i>
+
+<h3>QR Attendance</h3>
+
+<p>
+
+Scan student IDs instantly.
+
+</p>
+
+</div>
+
+<div class="feature-card">
+
+<i class="fa-solid fa-chart-line"></i>
+
+<h3>Analytics</h3>
+
+<p>
+
+Track attendance trends.
+
+</p>
+
+</div>
+
+<div class="feature-card">
+
+<i class="fa-solid fa-user-group"></i>
+
+<h3>Student Records</h3>
+
+<p>
+
+Complete attendance history.
+
+</p>
+
+</div>
+
+<div class="feature-card">
+
+<i class="fa-solid fa-school"></i>
+
+<h3>Teacher Dashboard</h3>
+
+<p>
+
+Monitor attendance in real time.
+
+</p>
+
+</div>
+
+</div>
+
+</section>
+
+<!--================ ABOUT =================-->
+
+<section id="about" class="about">
+
+<div class="about-content">
+
+<h2>
+
+Why AttendX AI?
+
+</h2>
+
+<p>
+
+Schools still spend valuable time on manual attendance.
+AttendX AI replaces paper registers with QR technology,
+making attendance faster, smarter, and easier for teachers,
+students, and administrators.
+
+</p>
+
+</div>
+
+</section>
+
+<!--================ CONTACT =================-->
+
+<section id="contact" class="contact">
+
+<h2>
+
+Let's Build Smarter Schools
+
+</h2>
+
+<p>
+
+Email us anytime.
+
+</p>
+
+<a href="mailto:contact@attendx.ai">
+
+contact@attendx.ai
+
+</a>
+
+</section>
+
+<!--================ FOOTER =================-->
+
+<footer>
+
+<div>
+
+<h3>AttendX AI</h3>
+
+<p>
+
+Hackathon Project 2026
+
+</p>
+
+</div>
+
+<div>
+
+<a href="#">Privacy</a>
+
+<a href="#">Terms</a>
+
+<a href="#">Support</a>
+
+</div>
+
+</footer>
+
+<script src="test.js"></script>
+
+</body>
+</html>
